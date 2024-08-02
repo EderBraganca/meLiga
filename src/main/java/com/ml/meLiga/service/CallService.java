@@ -19,12 +19,20 @@ public class CallService {
     }
 
     public Call createCall(String id){
-        Call call = new Call();
-        call.setId(id);
-        call.setStatus("Started");
-        callRepository.save(call);
-        log.info("Call created");
-        return call;
+        try{
+            if (!createCallVerification(id)) {
+                throw new Exception("Id in use!");
+            }
+            Call call = new Call();
+            call.setId(id);
+            call.setStatus("Started");
+            callRepository.save(call);
+            log.info("Call created");
+            return call;
+        }catch(Exception e){
+            log.info("Call not created");
+        }
+        return null;
     }
 
     public Optional<Call> connectCall(String id){
@@ -34,5 +42,9 @@ public class CallService {
         }
         assert call != null;
         return Optional.of(call);
+    }
+
+    public boolean createCallVerification(String id){
+        return callRepository.findById(id).isEmpty();
     }
 }
