@@ -17,6 +17,7 @@ public class Call {
     @Id
     private String id;
     private String status;
+    @ManyToMany
     protected List<User> users;
 
     public Call(CallDTO callDTO) {

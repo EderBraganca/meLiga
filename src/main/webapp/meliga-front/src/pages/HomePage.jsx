@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { connectCall, createCall} from '../websocket';
 import './pages.css';
 
 const HomePage = () => {
     const [callID, setCallID] = useState('');
 
-    const createCall = () => {
-        console.log("Create Call" + callID);
-        useNavigate('/call/' + callID);
+    const handleCreateCall = () => {
+        createCall(callID);
     }
-    const connectCall = () => {
-        console.log("Connect Call" + callID);
+    const handleConnectCall = () => {
+        connectCall(callID);
     }
 
     return (
@@ -18,8 +18,8 @@ const HomePage = () => {
             <section className='homeSection'>
                 <input type="text" onChange={setCallID} className="idInput" placeholder="Enter Call ID"/>
                 <section className='mainButtonsSection'>
-                    <button className="createBt" onClick={createCall()}>Create Call</button>
-                    <button className="connectBt" onClick={connectCall()}>Connect Call</button>
+                    <button className="createBt" onClick={handleCreateCall()}>Create Call</button>
+                    <button className="connectBt" onClick={handleConnectCall()}>Connect Call</button>
                 </section>
             </section>
         </div>

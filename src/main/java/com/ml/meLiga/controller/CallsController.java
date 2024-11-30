@@ -18,4 +18,9 @@ public class CallsController {
     public String status(){
         return "OK";
     }
+
+    @GetMapping("/create")
+    public String handleCreateCall(String id){
+        return "Created: " + id;
+    }
 }

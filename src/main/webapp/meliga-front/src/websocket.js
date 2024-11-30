@@ -1,25 +1,15 @@
-// src/webapp/src/websocket.js
+import { io } from 'socket.io-client';
 
-import SockJS from 'sockjs-client';
-import Stomp from 'stompjs';
+const socket = io('http://localhost:8080'); 
 
-var socket = new SockJS('/ws');
-var stompClient = Stomp.over(socket);
+export const createCall = (roomId) => {
+  socket.emit('createRoom', roomId);
+};
 
-stompClient.connect({}, function (frame) {
-    console.log('Conectado: ' + frame);
+export const connectCall = (roomId) => {
+  socket.emit('joinRoom', roomId);
+};
 
-    stompClient.subscribe('/topic/respostas', function (response) {
-        console.log('Resposta: ' + response.body);
-    });
-});
-
-// Função para enviar mensagens ao servidor
-export function enviarMensagem(destino, mensagem) {
-    stompClient.send(destino, {}, mensagem);
-}
-
-// Função para conectar-se a uma chamada específica
-export function conectarNaChamada(id) {
-    enviarMensagem("/app/join/" + id, id);
-}
+export const sendMessage = (roomId, message) => {
+  socket.emit('message', { roomId, message });
+};

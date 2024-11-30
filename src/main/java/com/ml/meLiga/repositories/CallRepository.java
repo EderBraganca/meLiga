@@ -9,5 +9,5 @@ import java.util.Optional;
 
 public interface CallRepository extends JpaRepository<Call, String>{
     Optional<Call> findCallById(String id);
-    Optional<Call> getUserByCallId(String callId);
+    Optional<Call> getUserById(String id);
 }
